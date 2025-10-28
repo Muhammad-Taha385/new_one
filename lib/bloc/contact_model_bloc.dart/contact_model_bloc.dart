@@ -26,13 +26,14 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
     on<SearchContacts>(_onSearchContacts);
   }
 
-  void _onSearchContacts(SearchContacts event, Emitter<ContactState> emit) {
+  void _onSearchContacts(SearchContacts event, Emitter<ContactState> emit) async{
     // currentState.isSearch = isSearch;
 
     if (state is ContactScreenLoaded) {
       log("SearchLoading");
       final currentState = state as ContactScreenLoaded;
       log("Query Loading");
+      await Future.delayed(const Duration(milliseconds: 500));
       emit(ContactScreenLoaded(currentState.users, query: event.query));
       log("SearchLoaded");
     }
@@ -97,7 +98,7 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
       emit(IncomingRequestsLoaded(incoming));
       // add(LoadContacts(event.currentUid)); // refresh contacts
     } catch (e) {
-      emit(ContactError("❌ Failed to accept request: $e"));
+      emit(ContactError("Failed to accept request: $e"));
     }
   }
 
@@ -122,12 +123,18 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
       emit(ContactError("Failed to load contacts: $e"));
     }
   }
+  // bool _hasLoadedFriends = false;
 
 //  StreamSubscription? _contactsSub;
   Future<void> _onLoadfriendsContacts(
     LoadfriendsContacts event,
     Emitter<ContactState> emit,
   ) async {
+    if (state is ContactScreenLoaded) return; // ✅ Already loaded once, skip reload
+
+    // if(_hasLoadedFriends) return;
+    // _hasLoadedFriends = true;
+    // await Future.delayed(Duration(seconds: 5));
     emit(ContactLoading());
     try {
       final users = await dbService.fetchfriendsContacts(event.currentUid);

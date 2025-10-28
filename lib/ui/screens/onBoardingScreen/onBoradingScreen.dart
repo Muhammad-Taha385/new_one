@@ -259,7 +259,7 @@ class OnBoardingScreen extends StatelessWidget {
   // ⬇️ Custom fade transition with pushReplacement
   Route _createSlideFadeRouteToLogin() {
     return PageRouteBuilder(
-      transitionDuration: const Duration(milliseconds: 1200),
+      transitionDuration: const Duration(milliseconds: 600),
       pageBuilder: (context, animation, secondaryAnimation) => LoginScreen(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         final slideAnimation = Tween<Offset>(

@@ -55,6 +55,9 @@ dependencies:
   path_provider: ^2.1.5
   path: ^1.9.1
   image_picker: ^1.2.0
+  flutter_native_splash: ^2.4.7
+  flutter_webrtc: ^1.2.0
+  auto_size_text: ^3.0.0
 
 
 
@@ -117,7 +120,8 @@ flutter:
         - asset: fonts/CarosSoft.otf  
     - family: CarosBold
       fonts:
-        - asset: fonts/CarosSoftBold.otf      
+        - asset: fonts/CarosSoftBold.otf   
+          
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

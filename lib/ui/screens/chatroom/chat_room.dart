@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 // import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
@@ -177,6 +178,120 @@ class ChatBubble extends StatelessWidget {
 }
 
 /// Bottom input field
+// class BottomField extends StatelessWidget {
+//   final void Function()? onTap;
+//   final void Function(String)? onChanged;
+//   final TextEditingController controller;
+
+//   const BottomField({
+//     super.key,
+//     this.onTap,
+//     this.onChanged,
+//     required this.controller,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       // color: Colors.white,
+//       padding: EdgeInsets.symmetric(
+//         // horizontal: 1.sw * 0.05,
+//         horizontal: 1.sw * 0.05,
+//         // vertical: 1.sh * 0.02,
+//          vertical: 1.sh * 0.02,
+//       ),
+//       child: Row(
+//         children: [
+//           // CircleAvatar(
+//           //   radius: 20.r,
+//           //   backgroundColor: Colors.white,
+//           //   child: Icon(Icons.add, color: primary),
+//           // ),
+//           InkWell(
+//             child: SvgPics(
+//               image: clipIcon,
+//               height: 25.h,
+//               width: 25.w,
+//               fit: BoxFit.cover,
+//               semanticsLabel: "clipIcon",
+//             ),
+//           ),
+//           SizedBox(width: 8.w),
+
+//           /// Textfield
+//           Expanded(
+//             child: CustomTextField(
+//               filled: true,
+//               fillColor: grey.withAlpha(30),
+//               isChat: true,
+//               hintText: "Write your message",
+//               onChanged: onChanged,
+//               controller: controller,
+//               border: OutlineInputBorder(
+//                   borderRadius: BorderRadius.circular(20.r),
+//                   borderSide: BorderSide.none),
+//               enabledBorder: OutlineInputBorder(
+//                   borderRadius: BorderRadius.circular(20.r),
+//                   borderSide: BorderSide.none),
+//               focusedBorder: OutlineInputBorder(
+//                   borderRadius: BorderRadius.circular(20.r),
+//                   borderSide: BorderSide.none),
+//             ),
+//           ),
+
+//           SizedBox(width: 4.w),
+
+//           /// Send button (only visible if text exists)
+//           ValueListenableBuilder<TextEditingValue>(
+//             valueListenable: controller,
+//             builder: (context, value, child) {
+//               final hasText = value.text.trim().isNotEmpty;
+//               return hasText
+//                   ? InkWell(
+//                       onTap: onTap,
+//                       child: CircleAvatar(
+//                         radius: 21.r,
+//                         backgroundColor: loginScreenLabelColor,
+//                         child: SvgPics(
+//                           image: sendIcon,
+//                           height: 25.h,
+//                           width: 25.w,
+//                           fit: BoxFit.fill,
+//                           semanticsLabel: "sendIcon",
+//                         ),
+//                       ),
+//                       // Icon(Icons.send, color: primary),
+//                     )
+//                   : Row(
+//                       mainAxisAlignment: MainAxisAlignment.center,
+//                       crossAxisAlignment: CrossAxisAlignment.center,
+//                       children: [
+//                         SvgPics(
+//                           image: cameraIcon,
+//                           height: 25.h,
+//                           width: 25.w,
+//                           fit: BoxFit.cover,
+//                           semanticsLabel: "cameraIcon",
+//                         ),
+//                         SizedBox(
+//                           width: 10.w,
+//                         ),
+//                         SvgPics(
+//                           image: microphoneIcon,
+//                           height: 25.h,
+//                           width: 25.w,
+//                           fit: BoxFit.cover,
+//                           semanticsLabel: "microphoneIcon",
+//                         )
+//                       ],
+//                     );
+//             },
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 class BottomField extends StatelessWidget {
   final void Function()? onTap;
   final void Function(String)? onChanged;
@@ -191,54 +306,68 @@ class BottomField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final orientation = MediaQuery.of(context).orientation;
+    final isPortrait = orientation == Orientation.portrait;
+
+    // Responsive paddings
+    final horizontalPadding = isPortrait ? 1.sw * 0.05 : 1.sw * 0.03;
+    final verticalPadding = isPortrait ? 1.sh * 0.02 : 1.sh * 0.01;
+
+    // Icon sizing
+    final iconSize = isPortrait ? 25.sp : 28.sp;
+
+    // Chat field height adjustment
+    final chatFieldHeight = isPortrait ? 50.h : 28.h;
+
     return Container(
-      // color: Colors.white,
       padding: EdgeInsets.symmetric(
-        horizontal: 1.sw * 0.05,
-        vertical: 1.sh * 0.02,
+        horizontal: horizontalPadding,
+        vertical: verticalPadding,
       ),
       child: Row(
+        // mainAxisAlignment: MainAxisAlignment.,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // CircleAvatar(
-          //   radius: 20.r,
-          //   backgroundColor: Colors.white,
-          //   child: Icon(Icons.add, color: primary),
-          // ),
           InkWell(
-            child: SvgPics(
-              image: clipIcon,
-              height: 25.h,
-              width: 25.w,
+            child: SvgPicture.asset(
+              clipIcon,
+              height: iconSize,
+              width: iconSize,
               fit: BoxFit.cover,
               semanticsLabel: "clipIcon",
             ),
           ),
-          SizedBox(width: 8.w),
+          SizedBox(width: isPortrait ? 8.w : 16.w),
 
-          /// Textfield
+          /// --- Text Field ---
           Expanded(
-            child: CustomTextField(
-              filled: true,
-              fillColor: grey.withAlpha(30),
-              isChat: true,
-              hintText: "Write your message",
-              onChanged: onChanged,
-              controller: controller,
-              border: OutlineInputBorder(
+            child: SizedBox(
+              height: chatFieldHeight,
+              child: CustomTextField(
+                filled: true,
+                fillColor: grey.withAlpha(30),
+                isChat: true,
+                hintText: "Write your message...",
+                onChanged: onChanged,
+                controller: controller,
+                border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20.r),
-                  borderSide: BorderSide.none),
-              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                ),
+                enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20.r),
-                  borderSide: BorderSide.none),
-              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                ),
+                focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20.r),
-                  borderSide: BorderSide.none),
+                  borderSide: BorderSide.none,
+                ),
+              ),
             ),
           ),
 
-          SizedBox(width: 4.w),
+          SizedBox(width: isPortrait ? 6.w : 14.w),
 
-          /// Send button (only visible if text exists)
           ValueListenableBuilder<TextEditingValue>(
             valueListenable: controller,
             builder: (context, value, child) {
@@ -247,39 +376,36 @@ class BottomField extends StatelessWidget {
                   ? InkWell(
                       onTap: onTap,
                       child: CircleAvatar(
-                        radius: 21.r,
+                        radius: isPortrait ? 21.r : 25.r,
                         backgroundColor: loginScreenLabelColor,
-                        child: SvgPics(
-                          image: sendIcon,
-                          height: 25.h,
-                          width: 25.w,
+                        child: SvgPicture.asset(
+                          sendIcon,
+                          height: iconSize,
+                          width: iconSize,
                           fit: BoxFit.fill,
                           semanticsLabel: "sendIcon",
                         ),
                       ),
-                      // Icon(Icons.send, color: primary),
                     )
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SvgPics(
-                          image: cameraIcon,
-                          height: 25.h,
-                          width: 25.w,
+                        SvgPicture.asset(
+                          cameraIcon,
+                          height: iconSize,
+                          width: iconSize,
                           fit: BoxFit.cover,
                           semanticsLabel: "cameraIcon",
                         ),
-                        SizedBox(
-                          width: 10.w,
-                        ),
-                        SvgPics(
-                          image: microphoneIcon,
-                          height: 25.h,
-                          width: 25.w,
+                        SizedBox(width: isPortrait ? 10.w : 16.w),
+                        SvgPicture.asset(
+                          microphoneIcon,
+                          height: iconSize,
+                          width: iconSize,
                           fit: BoxFit.cover,
                           semanticsLabel: "microphoneIcon",
-                        )
+                        ),
                       ],
                     );
             },
@@ -298,6 +424,7 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final orientation = MediaQuery.of(context).orientation;
     return Row(
       children: [
         IconButton(
@@ -307,14 +434,21 @@ class _Header extends StatelessWidget {
         SizedBox(width: 6.w),
         CircleAvatar(
           backgroundColor: grey.withAlpha(30),
-          radius: 18.r,
+          radius: 22.r,
           child: Text(
             user.name.isNotEmpty ? user.name[0] : "?",
             style: h.copyWith(fontSize: 18.sp, fontFamily: "Caros"),
           ),
         ),
         SizedBox(width: 7.w),
-        Text(name, style: h.copyWith(fontSize: 18.sp, fontFamily: "Caros")),
+        Flexible(
+          // fit: FlexFit.loose,
+          child: Text(name,
+              style: h.copyWith(
+                  fontSize: orientation == Orientation.portrait ? 18.sp : 20.sp,
+                  overflow: TextOverflow.ellipsis,
+                  fontFamily: "Caros")),
+        ),
         const Spacer(),
         ZegoSendCallInvitationButton(
           margin: EdgeInsets.all(0),
@@ -330,7 +464,9 @@ class _Header extends StatelessWidget {
             ZegoUIKitUser(id: user.uid, name: user.name),
           ],
           icon: ButtonIcon(
-            icon: Icon(Icons.call, color: Colors.black, size: 22.h),
+            icon: Icon(Icons.call,
+                color: Colors.black,
+                size: orientation == Orientation.portrait ? 22.h : 14.h),
             backgroundColor: Colors.transparent,
           ),
         ),
@@ -351,7 +487,9 @@ class _Header extends StatelessWidget {
             ZegoUIKitUser(id: user.uid, name: user.name),
           ],
           icon: ButtonIcon(
-            icon: Icon(Icons.video_call, color: Colors.black, size: 22.h),
+            icon: Icon(Icons.video_call,
+                color: Colors.black,
+                size: orientation == Orientation.portrait ? 22.h : 15.h),
             backgroundColor: Colors.transparent,
           ),
         ),

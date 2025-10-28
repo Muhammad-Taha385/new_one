@@ -409,6 +409,7 @@ class DatabaseService {
   }
 
   Future<List<Usermodel>> fetchfriendsContacts(String currentUid) async {
+    // await Future.delayed(Duration(seconds: 5));
     try {
       // 1️⃣ Get all requests where currentUid is either sender or receiver
       final snapshot = await _db
