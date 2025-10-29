@@ -22,9 +22,10 @@ class CustomButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final orientation = MediaQuery.of(context).orientation;
     return SizedBox(
-      width: 310.w,
-      height: 40.h,
+      width: orientation == Orientation.portrait ? 310.w : 750.w,
+      height: orientation == Orientation.portrait ? 40.h : 25.h,
       child: InkWell(
         onTap: onPressed,
         child: Container(

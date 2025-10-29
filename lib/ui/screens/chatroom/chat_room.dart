@@ -177,121 +177,6 @@ class ChatBubble extends StatelessWidget {
   }
 }
 
-/// Bottom input field
-// class BottomField extends StatelessWidget {
-//   final void Function()? onTap;
-//   final void Function(String)? onChanged;
-//   final TextEditingController controller;
-
-//   const BottomField({
-//     super.key,
-//     this.onTap,
-//     this.onChanged,
-//     required this.controller,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       // color: Colors.white,
-//       padding: EdgeInsets.symmetric(
-//         // horizontal: 1.sw * 0.05,
-//         horizontal: 1.sw * 0.05,
-//         // vertical: 1.sh * 0.02,
-//          vertical: 1.sh * 0.02,
-//       ),
-//       child: Row(
-//         children: [
-//           // CircleAvatar(
-//           //   radius: 20.r,
-//           //   backgroundColor: Colors.white,
-//           //   child: Icon(Icons.add, color: primary),
-//           // ),
-//           InkWell(
-//             child: SvgPics(
-//               image: clipIcon,
-//               height: 25.h,
-//               width: 25.w,
-//               fit: BoxFit.cover,
-//               semanticsLabel: "clipIcon",
-//             ),
-//           ),
-//           SizedBox(width: 8.w),
-
-//           /// Textfield
-//           Expanded(
-//             child: CustomTextField(
-//               filled: true,
-//               fillColor: grey.withAlpha(30),
-//               isChat: true,
-//               hintText: "Write your message",
-//               onChanged: onChanged,
-//               controller: controller,
-//               border: OutlineInputBorder(
-//                   borderRadius: BorderRadius.circular(20.r),
-//                   borderSide: BorderSide.none),
-//               enabledBorder: OutlineInputBorder(
-//                   borderRadius: BorderRadius.circular(20.r),
-//                   borderSide: BorderSide.none),
-//               focusedBorder: OutlineInputBorder(
-//                   borderRadius: BorderRadius.circular(20.r),
-//                   borderSide: BorderSide.none),
-//             ),
-//           ),
-
-//           SizedBox(width: 4.w),
-
-//           /// Send button (only visible if text exists)
-//           ValueListenableBuilder<TextEditingValue>(
-//             valueListenable: controller,
-//             builder: (context, value, child) {
-//               final hasText = value.text.trim().isNotEmpty;
-//               return hasText
-//                   ? InkWell(
-//                       onTap: onTap,
-//                       child: CircleAvatar(
-//                         radius: 21.r,
-//                         backgroundColor: loginScreenLabelColor,
-//                         child: SvgPics(
-//                           image: sendIcon,
-//                           height: 25.h,
-//                           width: 25.w,
-//                           fit: BoxFit.fill,
-//                           semanticsLabel: "sendIcon",
-//                         ),
-//                       ),
-//                       // Icon(Icons.send, color: primary),
-//                     )
-//                   : Row(
-//                       mainAxisAlignment: MainAxisAlignment.center,
-//                       crossAxisAlignment: CrossAxisAlignment.center,
-//                       children: [
-//                         SvgPics(
-//                           image: cameraIcon,
-//                           height: 25.h,
-//                           width: 25.w,
-//                           fit: BoxFit.cover,
-//                           semanticsLabel: "cameraIcon",
-//                         ),
-//                         SizedBox(
-//                           width: 10.w,
-//                         ),
-//                         SvgPics(
-//                           image: microphoneIcon,
-//                           height: 25.h,
-//                           width: 25.w,
-//                           fit: BoxFit.cover,
-//                           semanticsLabel: "microphoneIcon",
-//                         )
-//                       ],
-//                     );
-//             },
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
 class BottomField extends StatelessWidget {
   final void Function()? onTap;
   final void Function(String)? onChanged;
@@ -441,21 +326,23 @@ class _Header extends StatelessWidget {
           ),
         ),
         SizedBox(width: 7.w),
+        orientation == Orientation.portrait ? 
         Flexible(
-          // fit: FlexFit.loose,
           child: Text(name,
               style: h.copyWith(
                   fontSize: orientation == Orientation.portrait ? 18.sp : 20.sp,
                   overflow: TextOverflow.ellipsis,
                   fontFamily: "Caros")),
-        ),
+        ) :         Text(name,
+            style: h.copyWith(
+                fontSize: orientation == Orientation.portrait ? 18.sp : 20.sp,
+                overflow: TextOverflow.ellipsis,
+                fontFamily: "Caros")),
         const Spacer(),
         ZegoSendCallInvitationButton(
           margin: EdgeInsets.all(0),
           padding: EdgeInsets.all(0),
           unclickableBackgroundColor: Colors.orange,
-          // clickableBackgroundColor: Colors.red,
-          // iconSize: Size(10, 20),
 
           isVideoCall: false,
           buttonSize: Size(40, 40),

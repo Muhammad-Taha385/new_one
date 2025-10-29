@@ -5,24 +5,31 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:real_time_chat_application/bloc/login_bloc/login_screen_bloc.dart';
 import 'package:real_time_chat_application/bloc/login_bloc/login_screen_event.dart';
 import 'package:real_time_chat_application/bloc/login_bloc/login_screen_state.dart';
-
 import 'package:real_time_chat_application/core/constants/colors.dart';
 import 'package:real_time_chat_application/core/constants/strings.dart';
 import 'package:real_time_chat_application/core/constants/styles.dart';
 import 'package:real_time_chat_application/ui/Widgets/TextField/CustomButton.dart';
-
 import 'package:real_time_chat_application/ui/Widgets/TextField/custom_text.dart';
-
 import 'package:real_time_chat_application/ui/Widgets/TextField/textfield.dart';
 
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
-
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   void submitForm(BuildContext context) {
     if (_formKey.currentState!.validate()) {
@@ -31,7 +38,7 @@ class LoginScreen extends StatelessWidget {
             LoginAuth(
               email: emailController.text.trim(),
               password: passwordController.text.trim(),
-              context: context
+              context: context,
             ),
           );
     }
@@ -39,6 +46,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final orientation = MediaQuery.of(context).orientation;
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -49,7 +57,8 @@ class LoginScreen extends StatelessWidget {
             key: _formKey,
             child: Column(
               children: [
-                SizedBox(height: 100.h),
+                SizedBox(
+                    height: orientation == Orientation.portrait ? 100.h : 15.h),
                 OnBoardingText(
                   text: "Log in to Chatbox",
                   color: primary,
@@ -57,7 +66,8 @@ class LoginScreen extends StatelessWidget {
                   fontFamily: "CarosBold",
                   fontWeight: FontWeight.bold,
                 ),
-                SizedBox(height: 20.h),
+                SizedBox(
+                    height: orientation == Orientation.portrait ? 20.h : 5.h),
                 OnBoardingText(
                   text: "Welcome back! Sign in using your social",
                   color: grey,
@@ -72,39 +82,42 @@ class LoginScreen extends StatelessWidget {
                   fontSize: 15.sp,
                   height: 1.5,
                 ),
-                SizedBox(height: 20.h),
-      
-                /// Email
+                SizedBox(
+                    height: orientation == Orientation.portrait ? 20.h : 2.h),
+
+                /// Email Field
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
                   child: CustomTextField(
                     labelText: "Your email",
+                    hintText: "Enter your email",
                     controller: emailController,
                     validate: _emailValidate,
                     labelStyle: TextStyle(
                       color: loginScreenLabelColor,
                       fontWeight: FontWeight.w600,
                       fontFamily: "Circular-Std",
-                      fontSize: 14.sp,
+                      fontSize:
+                          orientation == Orientation.portrait ? 14.sp : 16.sp,
                     ),
                     border: const UnderlineInputBorder(),
-                                enabledBorder: 
-            const UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey, width: 1),
-            ),
-                        focusedBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey, width: 1),
-            ),
-
+                    enabledBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey, width: 1),
+                    ),
+                    focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey, width: 1),
+                    ),
                   ),
                 ),
-                SizedBox(height: 20.h),
-      
-                /// Password
+                SizedBox(
+                    height: orientation == Orientation.portrait ? 20.h : 10.h),
+
+                /// Password Field
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
                   child: CustomTextField(
                     labelText: "Password",
+                    hintText: "Enter your password",
                     controller: passwordController,
                     validate: _passwordValidate,
                     isObscure: true,
@@ -112,19 +125,19 @@ class LoginScreen extends StatelessWidget {
                       color: loginScreenLabelColor,
                       fontWeight: FontWeight.w600,
                       fontFamily: "Circular-Std",
-                      fontSize: 14.sp,
+                      fontSize:
+                          orientation == Orientation.portrait ? 14.sp : 16.sp,
                     ),
-                                        border: const UnderlineInputBorder(),
-                                enabledBorder: 
-            const UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey, width: 1),
-            ),
-                        focusedBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey, width: 1),
-            ),
+                    border: const UnderlineInputBorder(),
+                    enabledBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey, width: 1),
+                    ),
+                    focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey, width: 1),
+                    ),
                   ),
                 ),
-      
+
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
@@ -133,16 +146,20 @@ class LoginScreen extends StatelessWidget {
                       "Forgot Password?",
                       style: body.copyWith(
                         color: loginScreenLabelColor,
-                        fontSize: 13.sp,
+                        fontSize:
+                            orientation == Orientation.portrait ? 13.sp : 15.sp,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 10.h),
-      
+                SizedBox(
+                    height: orientation == Orientation.portrait ? 10.h : 2.h),
+
                 /// BlocBuilder for Login Button
                 BlocBuilder<LoginScreenBloc, LoginScreenState>(
+                  buildWhen: (prev, curr) =>
+                      curr is LoginScreenLoading || curr is LoginScreenInitial,
                   builder: (context, state) {
                     final isLoading = state is LoginScreenLoading;
                     return CustomButtonWidget(
@@ -155,12 +172,12 @@ class LoginScreen extends StatelessWidget {
                     );
                   },
                 ),
-      
-                SizedBox(height: 30.h),
+
+                SizedBox(
+                    height: orientation == Orientation.portrait ? 30.h : 5.h),
                 Row(
                   children: [
-                    Expanded(
-                        child: Divider(color: Colors.grey, thickness: 1)),
+                    Expanded(child: Divider(color: Colors.grey, thickness: 1)),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 6.w),
                       child: Text(
@@ -168,15 +185,14 @@ class LoginScreen extends StatelessWidget {
                         style: body.copyWith(fontSize: 14, color: primary),
                       ),
                     ),
-                    Expanded(
-                        child: Divider(color: Colors.grey, thickness: 1)),
+                    Expanded(child: Divider(color: Colors.grey, thickness: 1)),
                   ],
                 ),
-                SizedBox(height: 15.h),
+                SizedBox(
+                    height: orientation == Orientation.portrait ? 15.h : 7.h),
                 buildGoogleLoginButton(context),
-                SizedBox(height: 10.h),
-                // buildFacebookLoginButton(context),
-                // SizedBox(height: 10.h),
+                SizedBox(
+                    height: orientation == Orientation.portrait ? 10.h : 2.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -219,25 +235,27 @@ class LoginScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text("Reset Password"),
+        title: const Text("Reset Password"),
         content: TextFormField(
           controller: resetEmailController,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             hintText: "Email",
             prefixIcon: Icon(Icons.email_outlined),
           ),
         ),
         actions: [
           TextButton(
-              onPressed: () => Navigator.pop(context), child: Text("Cancel")),
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Cancel")),
           ElevatedButton(
             onPressed: () async {
               final email = resetEmailController.text.trim();
               if (email.isEmpty) return;
               try {
-                await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+                await FirebaseAuth.instance
+                    .sendPasswordResetEmail(email: email);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Reset link sent")),
+                  const SnackBar(content: Text("Reset link sent")),
                 );
               } catch (e) {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -246,7 +264,7 @@ class LoginScreen extends StatelessWidget {
               }
               Navigator.pop(context);
             },
-            child: Text("Send"),
+            child: const Text("Send"),
           ),
         ],
       ),
@@ -254,13 +272,14 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget buildGoogleLoginButton(BuildContext context) {
+    final orientation = MediaQuery.of(context).orientation;
     return InkWell(
       onTap: () {
         context.read<LoginScreenBloc>().add(GoogleAuth(context: context));
       },
       child: Container(
-        width: 310.w,
-        height: 45.h,
+        width: orientation == Orientation.portrait ? 310.w : 750.w,
+        height: orientation == Orientation.portrait ? 40.h : 25.h,
         decoration: BoxDecoration(
           color: Colors.grey.shade300,
           borderRadius: BorderRadius.circular(13.r),
@@ -269,44 +288,14 @@ class LoginScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(glogo, height: 24.h),
+              Image.asset(glogo,
+                  height: orientation == Orientation.portrait ? 24.h : 20.h),
               SizedBox(width: 12.w),
-              Text("Sign in with Google"),
+              const Text("Sign in with Google"),
             ],
           ),
         ),
       ),
     );
   }
-
-//   Widget buildFacebookLoginButton(BuildContext context) {
-//     return InkWell(
-//       // onTap: () {
-//       //   context.read<LoginBloc>().add(FacebookLoginPressed());
-//       // },
-//       child: Container(
-//         width: 310.w,
-//         height: 45.h,
-//         decoration: BoxDecoration(
-//           color: Colors.grey.shade300,
-//           borderRadius: BorderRadius.circular(13.r),
-//         ),
-//         child: Center(
-//           child: Row(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               SvgPics(
-//                 image: facebooklogin,
-//                 height: 24.h,
-//                 fit: BoxFit.cover,
-//               ),
-//               SizedBox(width: 12.w),
-//               Text("Sign in with Facebook"),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 }

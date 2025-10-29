@@ -4,20 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:real_time_chat_application/bloc/signup_bloc/signup_bloc.dart';
 import 'package:real_time_chat_application/bloc/signup_bloc/signup_event.dart';
 import 'package:real_time_chat_application/bloc/signup_bloc/signup_state.dart';
-// import 'package:real_time_chat_application/bloc/text_field_bloc/text_field_bloc.dart';
 import 'package:real_time_chat_application/core/constants/colors.dart';
 import 'package:real_time_chat_application/core/constants/strings.dart';
 import 'package:real_time_chat_application/core/constants/styles.dart';
-// import 'package:real_time_chat_application/core/enums/enums.dart';
-// import 'package:real_time_chat_application/core/services/signin_auth_service.dart';
 import 'package:real_time_chat_application/ui/Widgets/TextField/CustomButton.dart';
 import 'package:real_time_chat_application/ui/Widgets/TextField/custom_text.dart';
 import 'package:real_time_chat_application/ui/Widgets/TextField/textfield.dart';
-// import 'package:real_time_chat_application/ui/screens/auth/login/login_viewmodel.dart';
-// import 'package:real_time_chat_application/core/utils/toastmessage_utils.dart';
-// import 'package:real_time_chat_application/ui/screens/auth/signup/signup_viewmodel.dart';
 
-/// SignupScreen allows users to register a new account with email and password.
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
@@ -108,6 +101,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final orientation = MediaQuery.of(context).orientation;
     return BlocListener<SignupBloc, SignupState>(
       listener: (context, state) {
         if (state is SignupLoading) {
@@ -132,7 +126,10 @@ class _SignupScreenState extends State<SignupScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          SizedBox(height: 80.h),
+                          SizedBox(
+                              height: orientation == Orientation.portrait
+                                  ? 80.h
+                                  : 20.h),
                           // Text("", style: h),
                           OnBoardingText(
                             text: "Sign up with Email",
@@ -141,7 +138,10 @@ class _SignupScreenState extends State<SignupScreen> {
                             fontWeight: FontWeight.bold,
                             fontSize: 30.sp,
                           ),
-                          SizedBox(height: 20.h),
+                          SizedBox(
+                              height: orientation == Orientation.portrait
+                                  ? 20.h
+                                  : 10.h),
                           OnBoardingText(
                             text:
                                 "Get chatting with friends and family today by",
@@ -159,57 +159,83 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
 
                           SizedBox(
-                            height: 20.h,
+                            height: orientation == Orientation.portrait
+                                ? 20.h
+                                : 10.h,
                           ),
 
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 12.w),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: orientation == Orientation.portrait
+                                    ? 12.w
+                                    : 16.w),
                             child: CustomTextField(
                               labelText: "Your name",
+                              hintText: "Enter your name",
                               controller: nameController,
                               validate: _validateName,
                               labelStyle: TextStyle(
                                   color: loginScreenLabelColor,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: "Circular-Std",
-                                  fontSize: 14.sp),
-                                                      border: const UnderlineInputBorder(),
-                                enabledBorder: 
-            const UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey, width: 1),
-            ),
-                        focusedBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey, width: 1),
-            ),
+                                  fontSize: orientation == Orientation.portrait
+                                      ? 14.sp
+                                      : 16.sp),
+                              border: const UnderlineInputBorder(),
+                              enabledBorder: const UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.grey, width: 1),
+                              ),
+                              focusedBorder: const UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.grey, width: 1),
+                              ),
                             ),
                           ),
-                          SizedBox(height: 20.h),
+                          SizedBox(
+                              height: orientation == Orientation.portrait
+                                  ? 20.h
+                                  : 15.h),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 12.w),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: orientation == Orientation.portrait
+                                    ? 12.w
+                                    : 16.w),
                             child: CustomTextField(
                               labelText: "Your email",
+                              hintText: "Enter your email",
                               controller: emailController,
                               validate: _validateEmail,
                               labelStyle: TextStyle(
                                   color: loginScreenLabelColor,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: "Circular-Std",
-                                  fontSize: 14.sp),
-                                                      border: const UnderlineInputBorder(),
-                                enabledBorder: 
-            const UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey, width: 1),
-            ),
-                        focusedBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey, width: 1),
-            ),
+                                  fontSize: orientation == Orientation.portrait
+                                      ? 14.sp
+                                      : 16.sp),
+                              border: const UnderlineInputBorder(),
+                              enabledBorder: const UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.grey, width: 1),
+                              ),
+                              focusedBorder: const UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.grey, width: 1),
+                              ),
                             ),
                           ),
-                          SizedBox(height: 20.h),
+                          SizedBox(
+                              height: orientation == Orientation.portrait
+                                  ? 20.h
+                                  : 15.h),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 12.w),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: orientation == Orientation.portrait
+                                    ? 12.w
+                                    : 16.w),
                             child: CustomTextField(
                               labelText: "Password",
+                              hintText: "Enter your password",
                               isObscure: true,
                               controller: passwordController,
                               validate: _validatePassword,
@@ -217,23 +243,33 @@ class _SignupScreenState extends State<SignupScreen> {
                                 color: loginScreenLabelColor,
                                 fontWeight: FontWeight.w600,
                                 fontFamily: "Circular-Std",
-                                fontSize: 14.sp,
+                                fontSize: orientation == Orientation.portrait
+                                    ? 14.sp
+                                    : 16.sp,
                               ),
-                                                  border: const UnderlineInputBorder(),
-                                enabledBorder: 
-            const UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey, width: 1),
-            ),
-                        focusedBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey, width: 1),
-            ),
+                              border: const UnderlineInputBorder(),
+                              enabledBorder: const UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.grey, width: 1),
+                              ),
+                              focusedBorder: const UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.grey, width: 1),
+                              ),
                             ),
                           ),
-                          SizedBox(height: 20.h),
+                          SizedBox(
+                              height: orientation == Orientation.portrait
+                                  ? 20.h
+                                  : 15.h),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 12.w),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: orientation == Orientation.portrait
+                                    ? 12.w
+                                    : 16.w),
                             child: CustomTextField(
                               labelText: "Confirm Password",
+                              hintText: "Confirm your password",
                               isObscure: true,
                               controller: confirmPasswordController,
                               validate: _validateConfirmPassword,
@@ -241,15 +277,18 @@ class _SignupScreenState extends State<SignupScreen> {
                                   color: loginScreenLabelColor,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: "Circular-Std",
-                                  fontSize: 14.sp),
-                                                      border: const UnderlineInputBorder(),
-                                enabledBorder: 
-            const UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey, width: 1),
-            ),
-                        focusedBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey, width: 1),
-            ),
+                                  fontSize: orientation == Orientation.portrait
+                                      ? 14.sp
+                                      : 16.sp),
+                              border: const UnderlineInputBorder(),
+                              enabledBorder: const UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.grey, width: 1),
+                              ),
+                              focusedBorder: const UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.grey, width: 1),
+                              ),
                             ),
                           ),
 
@@ -281,7 +320,9 @@ class _SignupScreenState extends State<SignupScreen> {
                             },
                           ),
                           SizedBox(
-                            height: 15.h,
+                            height: orientation == Orientation.portrait
+                                ? 15.h
+                                : 7.h,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,

@@ -20,7 +20,7 @@ import 'package:real_time_chat_application/core/models/usermodel.dart';
 // import 'package:real_time_chat_application/core/services/database_service.dart';
 import 'package:real_time_chat_application/ui/Widgets/TextField/search_text_field.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:auto_size_text/auto_size_text.dart';
+// import 'package:auto_size_text/auto_size_text.dart';
 
 class NewChatScreen extends StatefulWidget {
   final String currentUid;
@@ -201,7 +201,7 @@ class _NewChatScreenState extends State<NewChatScreen> {
                           itemCount: users.length,
                           separatorBuilder: (_, __) => SizedBox(
                               height: orientation == Orientation.portrait
-                                  ? 6.h
+                                  ? 8.h
                                   : 9.h),
                           itemBuilder: (context, index) {
                             final user = users[index];
