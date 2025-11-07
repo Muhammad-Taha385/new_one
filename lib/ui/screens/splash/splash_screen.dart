@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:real_time_chat_application/core/constants/strings.dart';
+import 'package:real_time_chat_application/ui/screens/wrapper/new_wrapper.dart';
 import 'package:real_time_chat_application/ui/screens/wrapper/wrapper.dart';
 
 
@@ -31,7 +32,7 @@ void _startSplashTimer() {
         Navigator.of(context).pushReplacement(
           PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
-                const UserSessionHandling(),
+                 UserSessionHandling(),
             transitionsBuilder: (context, animation, secondaryAnimation, child) {
               const begin = Offset(1.0, 0.0);
               const end = Offset.zero;

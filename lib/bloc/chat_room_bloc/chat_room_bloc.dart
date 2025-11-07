@@ -28,33 +28,9 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
     on<SendMessage>(_onSendMessage);
     on<MarkMessagesRead>(_onMarkMessagesRead); // ✅ fixed here
 
-//     on<MarkMessagesRead>((event, emit) {
-//     final updatedMessages = state.messages.map((message) {
-//     if (message.recieverId == event.currentUserId && !message.isRead!) {
-//       return MessageModel(
-//         senderId: message.senderId,
-//         recieverId: message.recieverId,
-//         content: message.content,
-//         timeStamp: message.timeStamp,
-//         isRead: true,
-//       );
-//     }
-//     return message;
-//   }).toList();
-
-//   emit(state.copyWith(messages: updatedMessages));
-// });
-
     add(LoadMessages(chatRoomId));
   }
 
-  // void _setupChatRoomId() {
-  //   if (currentUser.uid.hashCode > receiver.uid.hashCode) {
-  //     chatRoomId = "${currentUser.uid}_${receiver.uid}";
-  //   } else {
-  //     chatRoomId = "${receiver.uid}_${currentUser.uid}";
-  //   }
-  // }
   void _setupChatRoomId() {
   final sorted = [currentUser.uid, receiver.uid]..sort();
   chatRoomId = "${sorted.first}_${sorted.last}";

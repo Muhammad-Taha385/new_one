@@ -157,21 +157,24 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: orientation == Orientation.portrait ? 10.h : 2.h),
 
                 /// BlocBuilder for Login Button
-                BlocBuilder<LoginScreenBloc, LoginScreenState>(
-                  buildWhen: (prev, curr) =>
-                      curr is LoginScreenLoading || curr is LoginScreenInitial,
-                  builder: (context, state) {
-                    final isLoading = state is LoginScreenLoading;
-                    return CustomButtonWidget(
-                      fontSize: 15,
-                      backgroundColor: loginScreenLabelColor,
-                      color: Colors.white,
-                      loading: isLoading,
-                      onPressed: isLoading ? null : () => submitForm(context),
-                      text: "Login",
-                    );
-                  },
-                ),
+BlocBuilder<LoginScreenBloc, LoginScreenState>(
+  buildWhen: (prev, curr) =>
+      curr is LoginScreenLoading ||
+      curr is LoginScreenInitial ||
+      curr is LoginScreenError,
+  builder: (context, state) {
+    final isLoading = state is LoginScreenLoading;
+    return CustomButtonWidget(
+      fontSize: 15,
+      backgroundColor: loginScreenLabelColor,
+      color: Colors.white,
+      loading: isLoading,
+      onPressed: isLoading ? null : () => submitForm(context),
+      text: "Login",
+    );
+  },
+),
+
 
                 SizedBox(
                     height: orientation == Orientation.portrait ? 30.h : 5.h),

@@ -85,7 +85,7 @@ class MyApp extends StatelessWidget {
           navigatorKey: navigationService.navigatorKey,
 
           navigatorObservers: [NavigationService()],
-          home: const SplashScreen(),
+          home:SplashScreen() ,
         ),
       ),
     );

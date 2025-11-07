@@ -9,6 +9,7 @@ import 'package:real_time_chat_application/ui/screens/chatroom/chat_room.dart';
 import 'package:real_time_chat_application/ui/screens/contact_screen/contact_screen.dart';
 import 'package:real_time_chat_application/ui/screens/splash/splash_screen.dart';
 import 'package:real_time_chat_application/ui/screens/story_upload_page/story_upload_page.dart';
+import 'package:real_time_chat_application/ui/screens/wrapper/new_wrapper.dart';
 import 'package:real_time_chat_application/ui/screens/wrapper/wrapper.dart';
 // import 'package:flutter_application_1/models/order_model.dart';
 // import 'package:flutter_application_1/views/customer_dashboard.dart';

@@ -33,6 +33,8 @@ class LoginScreenBloc extends Bloc<LoginScreenEvent, LoginScreenState> {
         }
       } catch (e) {
         emit(LoginScreenError(e.toString()));
+          emit(LoginScreenInitial()); // 👈 reset UI back to normal
+
       }
     });
 

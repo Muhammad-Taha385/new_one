@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +16,7 @@ import 'package:real_time_chat_application/core/models/message_model.dart';
 import 'package:real_time_chat_application/core/models/usermodel.dart';
 // import 'package:real_time_chat_application/core/services/call_screen.dart';
 import 'package:real_time_chat_application/core/services/chat_Screen.dart';
+import 'package:real_time_chat_application/practice/webrtc_callscreen.dart';
 import 'package:real_time_chat_application/ui/Widgets/TextField/svg_image.dart';
 import 'package:real_time_chat_application/ui/Widgets/TextField/textfield.dart';
 import 'package:zego_uikit/zego_uikit.dart';
@@ -63,7 +65,10 @@ class _ChatRoomState extends State<ChatRoom> {
                     vertical: 1.sh * 0.05,
                   ),
                   child: _Header(
-                    name: widget.receiver.name, user: widget.receiver,
+                    name: widget.receiver.name,
+                    user: widget.receiver,
+                    currentUser: widget.currentUser,
+
                     // } ,
                   ),
                 ),
@@ -304,8 +309,10 @@ class BottomField extends StatelessWidget {
 /// Header
 class _Header extends StatelessWidget {
   final Usermodel user;
+  final Usermodel currentUser;
   final String name;
-  const _Header({required this.name, required this.user});
+  const _Header(
+      {required this.name, required this.user, required this.currentUser});
 
   @override
   Widget build(BuildContext context) {
@@ -326,59 +333,101 @@ class _Header extends StatelessWidget {
           ),
         ),
         SizedBox(width: 7.w),
-        orientation == Orientation.portrait ? 
-        Flexible(
-          child: Text(name,
-              style: h.copyWith(
-                  fontSize: orientation == Orientation.portrait ? 18.sp : 20.sp,
-                  overflow: TextOverflow.ellipsis,
-                  fontFamily: "Caros")),
-        ) :         Text(name,
-            style: h.copyWith(
-                fontSize: orientation == Orientation.portrait ? 18.sp : 20.sp,
-                overflow: TextOverflow.ellipsis,
-                fontFamily: "Caros")),
+        orientation == Orientation.portrait
+            ? Flexible(
+                child: AutoSizeText(name,
+                    maxFontSize: 20,
+                    minFontSize: 18,
+                    maxLines: 1,
+                    style: h.copyWith(
+                        // fontSize:
+                        //     orientation == Orientation.portrait ? 18.sp : 20.sp,
+                        overflow: TextOverflow.ellipsis,
+                        fontFamily: "Caros")),
+              )
+            : Text(name,
+                style: h.copyWith(
+                    fontSize:
+                        orientation == Orientation.portrait ? 18.sp : 20.sp,
+                    overflow: TextOverflow.ellipsis,
+                    fontFamily: "Caros")),
         const Spacer(),
-        ZegoSendCallInvitationButton(
-          margin: EdgeInsets.all(0),
-          padding: EdgeInsets.all(0),
-          unclickableBackgroundColor: Colors.orange,
+        // ZegoSendCallInvitationButton(
+        //   margin: EdgeInsets.all(0),
+        //   padding: EdgeInsets.all(0),
+        //   unclickableBackgroundColor: Colors.orange,
 
-          isVideoCall: false,
-          buttonSize: Size(40, 40),
-          resourceID: "",
-          invitees: [
-            ZegoUIKitUser(id: user.uid, name: user.name),
-          ],
-          icon: ButtonIcon(
-            icon: Icon(Icons.call,
-                color: Colors.black,
-                size: orientation == Orientation.portrait ? 22.h : 14.h),
-            backgroundColor: Colors.transparent,
-          ),
-        ),
-        SizedBox(
-          width: 2.w,
-        ),
-        ZegoSendCallInvitationButton(
-          margin: EdgeInsets.all(0),
-          padding: EdgeInsets.all(0),
-          unclickableBackgroundColor: Colors.orange,
-          // clickableBackgroundColor: Colors.red,
-          // iconSize: Size(10, 20),
+        //   isVideoCall: false,
+        //   buttonSize: Size(40, 40),
+        //   resourceID: "",
+        //   invitees: [
+        //     ZegoUIKitUser(id: user.uid, name: user.name),
+        //   ],
+        //   icon: ButtonIcon(
+        //     icon: Icon(Icons.call,
+        //         color: Colors.black,
+        //         size: orientation == Orientation.portrait ? 22.h : 14.h),
+        //     backgroundColor: Colors.transparent,
+        //   ),
+        // ),
+        // SizedBox(
+        //   width: 2.w,
+        // ),
+        // ZegoSendCallInvitationButton(
+        //   margin: EdgeInsets.all(0),
+        //   padding: EdgeInsets.all(0),
+        //   unclickableBackgroundColor: Colors.orange,
+        //   // clickableBackgroundColor: Colors.red,
+        //   // iconSize: Size(10, 20),
 
-          isVideoCall: true,
-          buttonSize: Size(40, 40),
-          resourceID: "",
-          invitees: [
-            ZegoUIKitUser(id: user.uid, name: user.name),
+        //   isVideoCall: true,
+        //   buttonSize: Size(40, 40),
+        //   resourceID: "",
+        //   invitees: [
+        //     ZegoUIKitUser(id: user.uid, name: user.name),
+        //   ],
+        //   icon: ButtonIcon(
+        //     icon: Icon(Icons.video_call,
+        //         color: Colors.black,
+        //         size: orientation == Orientation.portrait ? 22.h : 15.h),
+        //     backgroundColor: Colors.transparent,
+        //   ),
+        // ),
+
+        Row(
+          children: [
+            IconButton(
+              icon: const Icon(Icons.call, color: Colors.green),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => WebRTCCallScreen(
+                      currentUserId: currentUser.uid,
+                      receiverId: user.uid,
+                      isCaller: true,
+                    ),
+                  ),
+                );
+              },
+            ),
+            SizedBox(width: 4),
+            IconButton(
+              icon: const Icon(Icons.videocam, color: Colors.blue),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => WebRTCCallScreen(
+                      currentUserId: currentUser.uid,
+                      receiverId: user.uid,
+                      isCaller: true,
+                    ),
+                  ),
+                );
+              },
+            ),
           ],
-          icon: ButtonIcon(
-            icon: Icon(Icons.video_call,
-                color: Colors.black,
-                size: orientation == Orientation.portrait ? 22.h : 15.h),
-            backgroundColor: Colors.transparent,
-          ),
         ),
         SizedBox(
           width: 4.w,
