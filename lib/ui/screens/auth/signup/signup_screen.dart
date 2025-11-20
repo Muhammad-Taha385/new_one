@@ -91,11 +91,6 @@ class _SignupScreenState extends State<SignupScreen> {
             context: context,
             name: nameController.text.trim(),
           ));
-
-      nameController.clear();
-      passwordController.clear();
-      emailController.clear();
-      confirmPasswordController.clear();
     }
   }
 

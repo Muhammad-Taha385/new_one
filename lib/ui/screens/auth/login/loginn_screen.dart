@@ -157,45 +157,44 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: orientation == Orientation.portrait ? 10.h : 2.h),
 
                 /// BlocBuilder for Login Button
-BlocBuilder<LoginScreenBloc, LoginScreenState>(
-  buildWhen: (prev, curr) =>
-      curr is LoginScreenLoading ||
-      curr is LoginScreenInitial ||
-      curr is LoginScreenError,
-  builder: (context, state) {
-    final isLoading = state is LoginScreenLoading;
-    return CustomButtonWidget(
-      fontSize: 15,
-      backgroundColor: loginScreenLabelColor,
-      color: Colors.white,
-      loading: isLoading,
-      onPressed: isLoading ? null : () => submitForm(context),
-      text: "Login",
-    );
-  },
-),
-
-
-                SizedBox(
-                    height: orientation == Orientation.portrait ? 30.h : 5.h),
-                Row(
-                  children: [
-                    Expanded(child: Divider(color: Colors.grey, thickness: 1)),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 6.w),
-                      child: Text(
-                        "Or continue with",
-                        style: body.copyWith(fontSize: 14, color: primary),
-                      ),
-                    ),
-                    Expanded(child: Divider(color: Colors.grey, thickness: 1)),
-                  ],
+                BlocBuilder<LoginScreenBloc, LoginScreenState>(
+                  buildWhen: (prev, curr) =>
+                      curr is LoginScreenLoading ||
+                      curr is LoginScreenInitial ||
+                      curr is LoginScreenError,
+                  builder: (context, state) {
+                    final isLoading = state is LoginScreenLoading;
+                    return CustomButtonWidget(
+                      fontSize: 15,
+                      backgroundColor: loginScreenLabelColor,
+                      color: Colors.white,
+                      loading: isLoading,
+                      onPressed: isLoading ? null : () => submitForm(context),
+                      text: "Login",
+                    );
+                  },
                 ),
-                SizedBox(
-                    height: orientation == Orientation.portrait ? 15.h : 7.h),
-                buildGoogleLoginButton(context),
-                SizedBox(
-                    height: orientation == Orientation.portrait ? 10.h : 2.h),
+
+                // SizedBox(
+                //     height: orientation == Orientation.portrait ? 30.h : 5.h),
+                // // Row(
+                //   children: [
+                //     Expanded(child: Divider(color: Colors.grey, thickness: 1)),
+                //     Padding(
+                //       padding: EdgeInsets.symmetric(horizontal: 6.w),
+                //       child: Text(
+                //         "Or continue with",
+                //         style: body.copyWith(fontSize: 14, color: primary),
+                //       ),
+                //     ),
+                //     Expanded(child: Divider(color: Colors.grey, thickness: 1)),
+                //   ],
+                // ),
+                // SizedBox(
+                //     height: orientation == Orientation.portrait ? 15.h : 7.h),
+                // buildGoogleLoginButton(context),
+                // SizedBox(
+                //     height: orientation == Orientation.portrait ? 10.h : 2.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
